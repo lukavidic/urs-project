@@ -51,7 +51,13 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
    - **Custom kernel headers series** na **6.6.x** , jer ćemo izabrati kernel 6.6.30
    - **Binutils version** na **2.41** kao što je i podrazumijevano
    - **GCC compiler version** na **gcc 13.x** kao što i jeste
+
+     > Izborom opcija iznad smo odlučili da nam *Buildroot* sistem izgradi *toolchain* uz ostavljanje nekih osnovnih opcija na proizvoljno podešavanje, prije svega izbor *glibc* biblioteke pri izgradnji *toolchain*, te verzija *kernel* zaglavlja na neke preporučene vrijednosti
+
    - pod **Aditional gcc options** podsekcijom ćemo uključiti opciju: **Enable C++ support**.
+     
+      > Ova opcija nam je neophodna, između ostalog, da bismo kasnije mogli izabrati opciju **libv4l** koja nam služi za rad sa *videoforlinux* uređajima među kojima će biti i naša kamera
+     
 - U okviru **Build options** sekcije:
   - možemo provjeriti **Location to save buildroot config** da vidimo gdje će biti sačuvana ova izmjenje konfiguracija. Ukoliko ostavimo podrazumijevanu putanju, izmjenjena konfiguracija će pregaziti postojeću.
 - U okviru **System configuration** sekcije:
@@ -82,13 +88,20 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
           - **autoconver**
           - **bayer**
           - **kmssink**
-  - Izlazimo iz podsekcije *Audio and video applications* i ulazimo u podsekciju **Libraries**
+  - U podsekciji **Libraries** (nakon izlaska iz podsekcije *Audio and video applications*):
       - klikom na opciju **Graphics** otvara se niz novih opcija, potrebno je izabrati **kms++** te **Install test programs**
-      - biramo opciju **libdrm**, a zatim **Install test programs**
-        Izborom prethodne dvije opcije dobija se mogućnost korištenja *modetest*  te *kmsprint* i *kmstest* alata koji mogu biti jako koristan pri debagovanju
-      -    
-        
-    
+          - biramo opciju **libdrm**, a zatim **Install test programs**.
+            
+            > 
+            > Izborom prethodne dvije opcije dobija se mogućnost korištenja *modetest*  te *kmsprint* i *kmstest* alata koji mogu biti jako korisni pri debagovanju
+      - klikom na opciju **Hardware handling** otvara se niz opcija među kojima je potrebno  izabrati:
+          - **libv4l** te **v4l-utils-tools**
+
+            > Na ovaj način dodali smo podršku za kameru koje ćemo koristiti, u vidu skupa biblioteka koje služe kao sloj apstrakcije iznad *videoforlinux* kompatibilnih uređaja. Kao i niz *utility* funkcija za ispisivanje više informacija o uređajima i slično. Vidi [v4l](https://medium.com/@deepeshdeepakdd2/v4l-a-complete-practical-tutorial-c520f097b590).
+   - U podsekciji **Networking applications** potrebno je izabrati opciju **dropbear** da bismo imali mogućnost pristupa ploči preko *SSH* protokola. 
+
+> [!NOTE]
+> > Izborom prethodne dvije opcije dobija se mogućnost korištenja *modetest*  te *kmsprint* i *kmstest* alata koji mogu biti jako koristan pri debagovanju    
 
 
 
