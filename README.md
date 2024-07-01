@@ -64,7 +64,13 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
     - **System hostname** možemo podesiti na **urs**
     - **System banner** na **Welcome to URS**
     - **Init system** ćemo postaviti na **systemd**
+
+      > Bitno je da izaberemo *system* kao inicijalizacioni sistem, jer ćemo na taj način moći iskorisiti skrite za inicijalizaciju koje se nalaze u folderu ploče, ali isto tako imaćemo i mogućnost automatskog prepoznavanje prisutnih uređaja u sistemu i učitavanje odgovarajućih drajvera za te uređaje (*systemd* za te potrebe koristi alat *udev*)
+      >  
     - **Root filesystem overlay directories** dodaćemo putanju u kojoj želimo da se nalaze svi direktorijumi i fajlovi koje želimo da uključimo kao   *overlay*: **board/beagleboard/beagleboneai64/rootfs-overlay**.
+ 
+      > Također, bitno je da postavimo ovu putanju, jer želimo da koristimo mogućnost *Buildroot-a* da definišemo nešto što se zove *overlay*. Na putanji *board/beagleboard/beagleboneai64* kreiramo direktorijum *rootfs-overlay*, a zatim u njega možemo dodavati proizvoljne fajlove i direktorijume koje će onda *Buildroot* prepoznati i dodati u svoj *root* fajlsistem. Na taj način ćemo kasnije dodati konfiguraciju za mrežu, kao i javni ključ potreban za *SSH* konekciju i neke druge stvari.
+      > 
 - U okviru **Kernel** sekcije:
     - **Kernel version** biramo opciju **Custom version** i ispod u polje **Kernel version** upisujemo željenu veriziju, u našem slučaju: **6.6.30**
     - Ostale opcije ostavljamo kao podrazumijevane:
