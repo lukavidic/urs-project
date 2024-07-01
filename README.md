@@ -75,10 +75,15 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
     - **Kernel version** biramo opciju **Custom version** i ispod u polje **Kernel version** upisujemo željenu veriziju, u našem slučaju: **6.6.30**
     - Ostale opcije ostavljamo kao podrazumijevane:
       - **Kernel configuration** : **Use the architecture default configuration** jer smo izabrali podrazumijevani *defconfig* fajl ploče
-      - **Build a Device Tree Blob (DTB)** je označeno i kao **In-tree Device Tree Source file name** je postavljeno **ti/k3-j721e-beagleboneai64** 
+      - **Build a Device Tree Blob (DTB)** je označeno i kao **In-tree Device Tree Source file name** je postavljeno **ti/k3-j721e-beagleboneai64**
+
+         >
+         > Ove opcije su već podrazumijevano postavljene i na taj način će *Buildroot* forsira da pri izgradnji *kernel-a* korisiti podrazumijevane *device-tree* fajlove koji se odnose na ovu ploču, kao i podrazumijevani *defconfig* fajl, koji ovde modifikujemo.
+         >
+        
 - U okviru **Target packages** sekcije fokusiraćemo se na nekoliko podsekcija:
   -   **Audio and video applications**
-      - uključićemo opciju **gstreamer 1.x** da bismo imali podršku za *gstreamer framework* kojim ćemo raditi manipulaciju video signalom kao što je zahtijevano u tekstu zadatka
+      - uključićemo opciju **gstreamer 1.x** da bismo imali podršku za *gstreamer framework* 
       -   nakon izbora **gstreamer 1.x** otvoriće se niz opcija koje je moguće uključiti ili isključiti. Ostavićemo sve podrazumijevano uključene opcije takve kakve jesu, a zatim:
       -   izabraćemo opciju **gst1-plugins-good** te unutar nje izabrati redom opcije:
           -   **jpeg**
@@ -94,20 +99,27 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
           - **autoconver**
           - **bayer**
           - **kmssink**
+      >
+      
+      
+      > 
+      > Prethodnim opcijama dodali smo podršku za *gstreamer framework* koji će nam služiti za manipulaciju i obradu signala koje ćemo dobijati sa kamere, te prikazivati na ekranu. Također izabran je niz opcija koji u *gstreamer* dodaju razne pakete koje smo identifikovali kao potrebe pri izradi i prezentaciji projektnog zadatka, te također pri testiranju rada sistema.
+      >
+      
   - U podsekciji **Libraries** (nakon izlaska iz podsekcije *Audio and video applications*):
       - klikom na opciju **Graphics** otvara se niz novih opcija, potrebno je izabrati **kms++** te **Install test programs**
           - biramo opciju **libdrm**, a zatim **Install test programs**.
             
             > 
             > Izborom prethodne dvije opcije dobija se mogućnost korištenja *modetest*  te *kmsprint* i *kmstest* alata koji mogu biti jako korisni pri debagovanju
+            > 
       - klikom na opciju **Hardware handling** otvara se niz opcija među kojima je potrebno  izabrati:
           - **libv4l** te **v4l-utils-tools**
 
             > Na ovaj način dodali smo podršku za kameru koje ćemo koristiti, u vidu skupa biblioteka koje služe kao sloj apstrakcije iznad *videoforlinux* kompatibilnih uređaja. Kao i niz *utility* funkcija za ispisivanje više informacija o uređajima i slično. Vidi [v4l](https://medium.com/@deepeshdeepakdd2/v4l-a-complete-practical-tutorial-c520f097b590).
    - U podsekciji **Networking applications** potrebno je izabrati opciju **dropbear** da bismo imali mogućnost pristupa ploči preko *SSH* protokola. 
 
-> [!NOTE]
-> > Izborom prethodne dvije opcije dobija se mogućnost korištenja *modetest*  te *kmsprint* i *kmstest* alata koji mogu biti jako koristan pri debagovanju    
+
 
 
 
