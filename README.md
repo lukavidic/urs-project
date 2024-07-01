@@ -119,7 +119,15 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
             > Na ovaj način dodali smo podršku za kameru koje ćemo koristiti, u vidu skupa biblioteka koje služe kao sloj apstrakcije iznad *videoforlinux* kompatibilnih uređaja. Kao i niz *utility* funkcija za ispisivanje više informacija o uređajima i slično. Vidi [v4l](https://medium.com/@deepeshdeepakdd2/v4l-a-complete-practical-tutorial-c520f097b590).
    - U podsekciji **Networking applications** potrebno je izabrati opciju **dropbear** da bismo imali mogućnost pristupa ploči preko *SSH* protokola. 
 
+Nakon što smo izabrali sve željene opcije, u okviru grafičkog okruženja potreno je sačuvati novu konfiguraciju te izaći iz okruženja.  
+Sada ćemo pokrenuti komandu:
 
+```
+make linux-xconfig
+```
+
+Na ovaj način ćemo podesiti neke konfiguracione opcije specifične za sam *kernel* koje nismo mogli podešavati u okviru prethodne konfiguracije. 
+Kada pokrenemo prethodnu komandu, prvo će se preuzeti određeni kod *kernel-a* i to one verzije koju smo specificirali u prethodnoj konfiguraciji, i to može potrajati nekoliko minuta. Nakon toga otvoriće se grafički interfejs *xconfig-a* (ili *menuconfig* ako idemo preko njega) sa konfiguracionim opcijama *kernel-a*. Tu je potrebno izabrati nekoliko bitnih opcija.
 
 
 
