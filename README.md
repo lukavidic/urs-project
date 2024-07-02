@@ -3,17 +3,17 @@
 Tekst specifikacije projektnog zadatka se nalazi na repozitorijumu u fajlu *assignment.txt*.  
 Proces rada i koraci koji su neophodnu za realizaciju traženog zadatka biće opisani u ovom tekstu.
 
-# Preduslovi za izradu zadatka
+## Preduslovi za izradu zadatka
 1. BeagleBone AI 64 razvojna ploča sa napajanjem i eventualno kablom za povezivanje sa UART serijskim interfejsom na ploči
 2. kabl sa mini DisplayPort konektorom na jednoj strani za povezivanje sa BB AI64
 3. USB kamera ili CSI kamera (ako se koristi CSI kamera potrebno je imati i odgovarajući kabl sa 22-pinskim konektorom za povezivanje na BB AI64)
 4. SD kartica
 5. LAB kabl za povezivanje razvojnog računara i BB AI64
 
-# Izrada zadatka
+## Izrada zadatka
 Na samom početku potrebno je odlučiti na koji način će se generisati *build* sistem za BB AI64 ploču, to podrazumijeva generisanje *toolchain-a*, *bootloader-a*, *kernel-a*, te *root* fajlsistema. U našemu slučaju za generisanje svih potrebnih komponenata izabran je *Buildroot* alat. 
 
-## Generisanje sistema *Buildroot* alatom
+### Generisanje sistema *Buildroot* alatom
 Za početak potrebno je klonirati git repozitorijum *Buildroot* sistema sa njihove zvanične stranice, a zatim se prebaciti na granu 2024.05, jer u toj verziji postoje svi neophodni fajlovi za generisanje sistema za BB AI64 ploču. Potrebno je pozicionirati se u željeni direktorijum na računaru, a zatim izvršiti sljedeći skup komandi: 
 
 ```
@@ -183,7 +183,7 @@ cp id_rsa.pub cd `<buildroot-folder>/board/beagleboard/beagleboneai64/rootfs-ove
 
 Na ovaj način smo preko *overlay-a* omogućili da se na *root filesystem-u* ploče nađe javni *SSH* ključ i omogućili podršku za *SSH* konekciju.
 
-Međutim to nije dovoljno. Potrebno je da ploča ima mrežnu konekciju da bi se mogao koristiti *SSH* protokol. To možemo uraditi tako što se pomoću *UART* kabla povežemo na ploču i uradimo to ručno komandom *ifconfig*, međutim postoji i elegantniji način. 
+Ali to nije dovoljno. Potrebno je da ploča ima mrežnu konekciju da bi se mogao koristiti *SSH* protokol. To možemo uraditi tako što se pomoću *UART* kabla povežemo na ploču i uradimo to ručno komandom *ifconfig*, međutim postoji i elegantniji način. 
 Za ovaj posao možemo iskoristiti *systemd* infrastrukturu, tako što kreiramo konfiguracioni fajl koji podešava mrežni interfejs i smjestimo ga na *root filesystem* ploče. Smještanje na *root filesystem* ćemo obaviti već objašnjenim načinom koristeći *overlay*. 
 Dakle:
 
@@ -205,7 +205,13 @@ Address=192.168.21.100/24
 Gateway=192.168.21.1
 ```
 Ostaje još da se na razvojnom računaru podesi statička *IP* adresa, koju možemo postaviti na npr. 192.168.21.101 uz *Netmask* 255.255.255.0.
-Ponovo pokrenemo **make** komandu da bi se primjenile promjene koje smo napravili u *root filesystem-u*, te ponovo kopiramo *sdcar.img* na *SD* karticu. Ubacimo karticu na ploču i pokrenemo proces *boot-anja* ploče. 
+Ponovo pokrenemo **make** komandu da bi se primjenile promjene koje smo napravili u *root filesystem-u*, te ponovo kopiramo *sdcard.img* na *SD* karticu. 
+
+```
+sudo dd if=sdcard.img of=/dev/sdX bs=1M
+
+
+Ubacimo karticu na ploču i pokrenemo proces *boot-anja* ploče. 
 
 > [!IMPORTANT]
 > Prilikom pokretanja ploče potrebno je držati taster *BOOT* na ploči prilikom povezivanja napajanja. Na ovaj način govorimo ploči da želimo da se pokreće sistem koji se nalazi na *SD* kartici, a ne da se pokrene podrazumijevni operativni sistem sa *eMMC* memorije ploče, koji dolazi predefinisan.
