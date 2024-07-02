@@ -86,7 +86,9 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
   -   **Audio and video applications**
       - uključićemo opciju **gstreamer 1.x** da bismo imali podršku za *gstreamer framework* 
       -   nakon izbora **gstreamer 1.x** otvoriće se niz opcija koje je moguće uključiti ili isključiti. Ostavićemo sve podrazumijevano uključene opcije takve kakve jesu, a zatim:
-      -   treba kliknuti na **gst1-plugins-good** te u novom meniju izabrati redom opcije:
+      -   potrebno je izabrati opciju **gst1-plugins-base**
+          - i ostaviti sve uključene sve podrazumijevane opcije unutar ove podsekcije
+      -   izabrati **gst1-plugins-good** te u novom meniju izabrati redom opcije:
           -   **jpeg**
           -   **autodetect**
           -   **avi**
