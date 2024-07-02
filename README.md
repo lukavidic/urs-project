@@ -129,6 +129,29 @@ make linux-xconfig
 Na ovaj način ćemo podesiti neke konfiguracione opcije specifične za sam *kernel* koje nismo mogli podešavati u okviru prethodne konfiguracije. 
 Kada pokrenemo prethodnu komandu, prvo će se preuzeti određeni kod *kernel-a* i to one verzije koju smo specificirali u prethodnoj konfiguraciji, i to može potrajati nekoliko minuta. Nakon toga otvoriće se grafički interfejs *xconfig-a* (ili *menuconfig* ako idemo preko njega) sa konfiguracionim opcijama *kernel-a*. Tu je potrebno izabrati nekoliko bitnih opcija.
 
+U okviru **Device Drivers** sekcije
+   - A zatim u okviru **Graphics support**
+       - uključiti opciju **Direct Rendering Manager (XFree 4.1.0 and higher DRI support)**,
+       - a nakon toga klikom na *Graphics support* otvoriće se sa desne strane niz opcija
+           - uključiti opciju **DRM Support for TI keystone**
+        
+             >
+             >  Na ovaj način uključili smo podršku u vidu drajvera za *DSS - Display SubSystem* i to konkretno za sve platforme koje su dio *j721e* *Texas instruments* arhitekture, u koju spada i *SoC TDA4VM* koji se nalazi na našoj ploči. Konkretan naziv drajvera je *tidss* i on služi za dohvatanje i iscrtavanje piksela na ekran. Više informacija može se naći u zvaničnoj dokumentaciji vezanoj za sam *SoC* [TDA4VM](https://software-dl.ti.com/jacinto7/esd/processor-sdk-linux-sk-tda4vm/09_02_00/exports/docs/linux/Foundational_Components/Kernel/Kernel_Drivers/Display/DSS7.html)
+             >
+         - kliknuti na **Display Interface Bridges**
+             - izabrati opciju **Display connector support**
+        
+               >
+               > Omogućivanje drajvera za konektore displeja sa mogućnošću *hot-plug* rada.
+               >
+             - izabrati opciju **Cadence DPI/DP bridge**, a zatim i **J721E Cadence DPI/DP wrapper support**
+          
+               >
+               > Omogućivanje podrške za *J721E* platforme u vidu podešavanja internog *DPI/DP bridge-a*, te inicijalizacije nekih osnovnih podešavanje vezanih za *DisplayPort* interfejs koji mi koristimo za prikazivanje video strima na ekranu.
+               >
+             
+               
+
 
 
 
