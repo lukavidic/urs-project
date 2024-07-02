@@ -209,7 +209,7 @@ Ponovo pokrenemo **make** komandu da bi se primjenile promjene koje smo napravil
 
 ```
 sudo dd if=sdcard.img of=/dev/sdX bs=1M
-
+```
 
 Ubacimo karticu na ploču i pokrenemo proces *boot-anja* ploče. 
 
