@@ -161,9 +161,11 @@ make
 
 i čekamo nekoliko sati da se generišu potrebni artifakti.  
 
-Kada je izgradnja gotova, u `<buildroot-folder>/output/images` folderu biće generisan fajl `sdcard.img`. U ovom fajlu imamo kompletnu generisanu sliku SD kartice koju je potrebno samo instalirati na karticu. To možemo uraditi *Linux* komandom *dd*.  
+Kada je izgradnja gotova, u `<buildroot-folder>/output/images` folderu biće generisan fajl `sdcard.img`. U ovom fajlu imamo kompletnu generisanu sliku SD kartice koju je potrebno samo instalirati na karticu. To možemo uraditi *Linux* komandom *dd*. Međutim prije toga potreno je podesiti još nekoliko stvari.
 
-Međutim prije toga potrebno je odraditi nekoliko stvari. 
+
+## Ostvarivanje komunikacije sa pločom
+
 Pošto želimo da imamo mogućnost SSH konekcije sa pločom, a ranije smo u konfiguraciji definisali folder `<buildroot-folder>/board/beagleboard/beagleboneai64/rootfs-overlay` unutar kojeg možemo specificirati sve foldere i fajlove koje želimo da nam budu *overlay* postojećeg *root filesystem-a*. Potrebno je uraditi sljedeće.  
 
 Prvo treba generisati *SSH* ključ koji će nam služiti za konekciju sa pločom.
@@ -230,7 +232,27 @@ Gdje je *id_rsa* fajl u kojem se nalazi prethodno generisani privatni ključ.
 > Za ostvarivanje *SSH* komunikacije potrebno je prethodno imati podešenu statičku *IP* adresu, te fizičku vezu *LAN* kablom izmeđeu razvojnog računara i platforme.
 >
 
+### Prikaz video strima na ekranu
 
+Kada se povežemo na ploču možemo provjeriti da li su instalirani svi potrebni softverski paketi potrbeni za rad (*gstreamer*, *v4l* itd). To možemo uraditi pomoću utility alata, kao što su npr. **v4l2-ctl**, te **gst-inspect-1.0**. Takođe, ako smo povezali *USB* kameru na ploču, pomoću komande **v4l2-ctl --list-formats** možemo izlistati formate podržane kamerom. Trebali bi dobiti ispis sličan sljedećem, koji potvrđuje da je kamera prepoznata:
+
+```
+ioctl: VIDIOC_ENUM_FMT
+        Type: Video Capture
+
+        [0]: 'MJPG' (Motion-JPEG, compressed)
+        [1]: 'YUYV' (YUYV 4:2:2)
+
+```
+
+Sada korištenjem *gstreamer* infrastrukture možemo testirati rad sistema na način da se strimuje slika sa kamere na displej. *Gsteamer* može raditi na principu *pipeline-a* tako da se uveže nekoliko čvorova, kroz koje se može obrađivati ulazna slika na način da se mijenja i prilagođava format, radi obrada, modifikacija slike itd. Više o samom *gstreamer* na [linku](https://gstreamer.freedesktop.org/documentation/tutorials/index.html?gi-language=c). Testni *pipeline* može izgledati ovako: 
+
+```
+gst-inspect.1.0 v4l2src ! jpegdec ! videconvert ! autovideosink
+```
+
+> [!IMPORTANT]
+> Ukoliko se nakon ovoga ne pojavljuje video na displeju, moguće je da postoji problem sa *firmware-om* ploče, tj. konkretno sa nedostatkom fajla
 
 
 
