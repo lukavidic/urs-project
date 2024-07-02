@@ -149,6 +149,28 @@ U okviru **Device Drivers** sekcije
                >
                > Omogućivanje podrške za *J721E* platforme u vidu podešavanja internog *DPI/DP bridge-a*, te inicijalizacije nekih osnovnih podešavanje vezanih za *DisplayPort* interfejs koji mi koristimo za prikazivanje video strima na ekranu.
                >
+
+Nakon što smo podesili konfiguraciju vezanu za *kernel*, prije svega smo se bavili uključivanjem podrške za prikaz slike na ekran preko *DisplayPort* konektora, ostale stvari ostavljamo kako jesu i sačuvamo ovu konfiguraciju, te zatvorimo *config* grafički interfejs.
+
+  
+Sada, konačno možemo izgraditi sistem. Pokrećemo komandu:
+```
+make
+```
+
+i čekamo nekoliko sati da se generišu potrebni artifakti.  
+
+Kada je izgradnja gotova, u `<buildroot-folder>/output/images` folderu biće generisan fajl `sdcard.img`. U ovom fajlu imamo kompletnu generisanu sliku SD kartice koju je potrebno samo instalirati na karticu. To možemo uraditi *Linux* komandom *dd*.  
+
+Međutim prije toga potrebno je odraditi nekoliko stvari. 
+Pošto želimo da imamo mogućnost SSH konekcije sa pločom, a ranije smo u konfiguraciji definisali folder `<buildroot-folder>/board/beagleboard/beagleboneai64/rootfs-overlay` unutar kojeg možemo specificirati sve foldere i fajlove koje želimo da nam budu *overlay* postojećeg *root filesystem-a*. Potrebno je uraditi sljedeće.  
+
+Prvo treba generisati *SSH* ključ koji će nam služiti za konekciju sa pločom.
+
+```
+ssh-keygen -t rsa -b 4096 
+```
+kojom će se generisati par privatni-javni ključ na razvojnoj mašini u vidu dva fajla. 
              
                
 
