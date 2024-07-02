@@ -265,8 +265,8 @@ gst-inspect.1.0 v4l2src ! jpegdec ! videconvert ! autovideosink
 
 Nakon toga sve bi trebalo da radi kako je očekivano i dobija se video strim sa kamere na ekranu displeja.
 
-Na repozitorijumu projekta nalazi se i testni program u vidu *shell* skripte kojom se strimuje video sa kamere na ekran povezan na *DisplayPort*, pri čemu se nakon pokretanja skripte može podesiti da li želimo da primjenimo neki efekat na video i da izaberemo željenu rezoluciju i *framerate*. 
-
+Na repozitorijumu projekta nalazi se i testni program u vidu *shell* skripte **playback.sh** kojom se strimuje video sa kamere na ekran povezan na *DisplayPort*, pri čemu se nakon pokretanja skripte može podesiti da li želimo da primjenimo neki efekat na video i da izaberemo željenu rezoluciju i *framerate*. 
+Skripta se , takođe, nalazi na *root filesystem-u* ploče u *home* direktorijumu i može se jednostavno pokrenuti nakon što se ploča startuje. 
 
              
                
