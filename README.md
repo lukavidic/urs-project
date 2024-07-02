@@ -260,10 +260,12 @@ gst-inspect.1.0 v4l2src ! jpegdec ! videconvert ! autovideosink
 >  [    6.609014] cdns-mhdp8546 a000000.dp-bridge: cdns_mhdp_fw_cb: No firmware.
 > ```
 > Fajl se može naći na [linku](https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git).
-> Korištenjem *overlay* možemo smjestiti ovaj fajl na *root filesystem* na putanju cd `<buildroot-folder>/board/beagleboard/beagleboneai64/rootfs-overlay/lib/firmware/cadence`
+> Korištenjem *overlay-a* možemo smjestiti ovaj fajl na *root filesystem* na sljedeću putanju
+>  `<buildroot-folder>/board/beagleboard/beagleboneai64/rootfs-overlay/lib/firmware/cadence` i na taj način omogućiti da se potrebno *firmware* fajl učita od strane drajvera. 
 
 Nakon toga sve bi trebalo da radi kako je očekivano i dobija se video strim sa kamere na ekranu displeja.
-Na repozitorijumu projekta nalazi se i testni program u vidu *shell* skripte kojim se strimuje video sa kamere, pri čemu se nakon pokretanja skripte može podesiti da li želimo da primjenimo neki efekat na video i da izaberemo željenu rezoluciju i *framerate*. 
+
+Na repozitorijumu projekta nalazi se i testni program u vidu *shell* skripte kojom se strimuje video sa kamere na ekran povezan na *DisplayPort*, pri čemu se nakon pokretanja skripte može podesiti da li želimo da primjenimo neki efekat na video i da izaberemo željenu rezoluciju i *framerate*. 
 
 
              
