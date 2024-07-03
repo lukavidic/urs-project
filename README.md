@@ -8,7 +8,7 @@ Proces rada i koraci koji su neophodnu za realizaciju traženog zadatka biće op
 2. kabl sa mini DisplayPort konektorom na jednoj strani za povezivanje sa BB AI64
 3. USB kamera ili CSI kamera (ako se koristi CSI kamera potrebno je imati i odgovarajući kabl sa 22-pinskim konektorom za povezivanje na BB AI64)
 4. SD kartica
-5. LAB kabl za povezivanje razvojnog računara i BB AI64
+5. LAN kabl za povezivanje razvojnog računara i BB AI64
 
 ## Izrada zadatka
 Na samom početku potrebno je odlučiti na koji način će se generisati *build* sistem za BB AI64 ploču, to podrazumijeva generisanje *toolchain-a*, *bootloader-a*, *kernel-a*, te *root* fajlsistema. U našemu slučaju za generisanje svih potrebnih komponenata izabran je *Buildroot* alat. 
@@ -86,7 +86,9 @@ Sada nam se otvara grafički interfejs u kojem možemo napraviti izmjene u konfi
   -   **Audio and video applications**
       - uključićemo opciju **gstreamer 1.x** da bismo imali podršku za *gstreamer framework* 
       -   nakon izbora **gstreamer 1.x** otvoriće se niz opcija koje je moguće uključiti ili isključiti. Ostavićemo sve podrazumijevano uključene opcije takve kakve jesu, a zatim:
-      -   treba kliknuti na **gst1-plugins-good** te u novom meniju izabrati redom opcije:
+      -   potrebno je izabrati opciju **gst1-plugins-base**
+          - i ostaviti sve uključene sve podrazumijevane opcije unutar ove podsekcije
+      -   izabrati **gst1-plugins-good** te u novom meniju izabrati redom opcije:
           -   **jpeg**
           -   **autodetect**
           -   **avi**
@@ -252,9 +254,21 @@ gst-inspect.1.0 v4l2src ! jpegdec ! videconvert ! autovideosink
 ```
 
 > [!IMPORTANT]
-> Ukoliko se nakon ovoga ne pojavljuje video na displeju, moguće je da postoji problem sa *firmware-om* ploče, tj. konkretno sa nedostatkom fajla
+> Ukoliko se nakon ovoga ne pojavljuje video na displeju, moguće je da postoji problem sa *firmware-om* ploče, tj. konkretno sa nedostatkom fajla *mhdp8546.bin* na *root filesystem-u*. Problem se može detektovati tako što se analizira sadržaj *kernel* poruka korištenjem *dmesg* komande nakon pokretanja ploče. Isječak iz *dmesg* ispisa, u slučaju kada problem postoji , je sljedeći:
+> ```
+>  [    6.579043] cdns-mhdp8546 a000000.dp-bridge: invalid resource (null)
+>  [    6.586830] cdns-mhdp8546 a000000.dp-bridge: Failed to get SAPB memory resource, HDCP not supported
+>  [    6.597952] cdns-mhdp8546 a000000.dp-bridge: Direct firmware load for cadence/mhdp8546.bin failed with error -2
+>  [    6.609014] cdns-mhdp8546 a000000.dp-bridge: cdns_mhdp_fw_cb: No firmware.
+> ```
+> Fajl se može naći na [linku](https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git).
+> Korištenjem *overlay-a* možemo smjestiti ovaj fajl na *root filesystem* na sljedeću putanju
+>  `<buildroot-folder>/board/beagleboard/beagleboneai64/rootfs-overlay/usr/lib/firmware/cadence` i na taj način omogućiti da se potrebno *firmware* fajl učita od strane drajvera. 
 
+Nakon toga sve bi trebalo da radi kako je očekivano i dobija se video strim sa kamere na ekranu displeja.
 
+Na repozitorijumu projekta nalazi se i testni program u vidu *shell* skripte **playback.sh** kojom se strimuje video sa kamere na ekran povezan na *DisplayPort*, pri čemu se nakon pokretanja skripte može podesiti da li želimo da primjenimo neki efekat na video i da izaberemo željenu rezoluciju i *framerate*. 
+Skripta se , takođe, nalazi na *root filesystem-u* ploče u *home* direktorijumu i može se jednostavno pokrenuti nakon što se ploča startuje. 
 
              
                
